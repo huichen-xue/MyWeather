@@ -60,6 +60,7 @@ public class Utility {
 				JSONArray objArray = jsonObject.getJSONArray("HeWeather data service 3.0");
 				JSONObject gobj = objArray.getJSONObject(0);
 				JSONObject basic = gobj.getJSONObject("basic");
+				JSONObject update = basic.getJSONObject("update");
 				JSONArray daily_forecast = gobj.getJSONArray("daily_forecast");
 				JSONObject daily_obj = daily_forecast.getJSONObject(0);
 				JSONObject tmp = daily_obj.getJSONObject("tmp");
@@ -69,7 +70,7 @@ public class Utility {
 				JSONObject comf = suggestion.getJSONObject("comf");
 				String brf = comf.getString("brf");
 				String txt = comf.getString("txt");
-				String time = astro.getString("mr");//17:07
+				String time = update.getString("loc");//17:07
 				String text_weather = cond.getString("txt_d");//晴间多云
 				//String date = daily_obj.getString("date");
 				String max = tmp.getString("max");
@@ -87,7 +88,7 @@ public class Utility {
 			String temp2,String weather,String time,String brf,String txt){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日",Locale.CHINA);
 		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-		//editor.putBoolean("city_selected", true);
+		editor.putBoolean("city_selected", true);
 		editor.putString("currentDate",sdf.format(new Date()));
 		editor.putString("cnty_name",cnty);
 		editor.putString("city_name",city);
@@ -98,7 +99,7 @@ public class Utility {
 		editor.putString("brf",brf);
 		editor.putString("txt",txt);
 		editor.commit();
-		System.out.println("说明解析没有问题"+txt);
+		System.out.println("说明解析没有问题"+time);
 		Log.d(TAG, "获取成功");
 		
 	}
